@@ -49,6 +49,13 @@
             color: #991b1b !important;
         }
 
+        .feedback-text {
+            display: none;
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
         /* Hiệu ứng mượt mà khi hiện nội dung */
         .fade-in {
             animation: fadeIn 0.5s ease-in;
@@ -114,7 +121,10 @@
             <h2 class="text-3xl font-bold mb-2">Kết Quả Bài Làm</h2>
             <div id="result-stats" class="text-5xl font-extrabold text-indigo-600 mb-6">18/18</div>
             <p id="result-message" class="text-gray-600 mb-6 text-lg">Tuyệt vời! Bạn đã hoàn thành bài ôn tập rất tốt.</p>
-            <button onclick="location.reload()" class="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700">Làm lại bài mới</button>
+            <div class="space-y-3">
+                <button onclick="closeModal()" class="w-full py-3 bg-indigo-100 text-indigo-700 rounded-xl font-bold text-lg hover:bg-indigo-200">Xem lại đáp án chi tiết</button>
+                <button onclick="location.reload()" class="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700">Làm lại bài mới</button>
+            </div>
         </div>
     </div>
 
@@ -135,7 +145,6 @@
             { id: 13, q: "Danh sách [1, 3, 5, 6, 10]. Tìm giá trị 6 bằng tìm kiếm nhị phân mất mấy bước so sánh?", a: "A", options: { A: "2 bước", B: "3 bước", C: "4 bước", D: "5 bước" } },
             { id: 14, q: "Ưu điểm lớn nhất của tìm kiếm nhị phân so với tìm kiếm tuần tự là:", a: "C", options: { A: "Dễ thực hiện hơn", B: "Tìm được nhiều giá trị cùng lúc", C: "Tìm kiếm nhanh hơn rất nhiều với danh sách lớn", D: "Không cần sắp xếp" } },
             { id: 15, q: "Với danh sách đã sắp xếp có 8 phần tử, số lần so sánh tối đa của thuật toán nhị phân là:", a: "B", options: { A: "3 lần", B: "4 lần", C: "8 lần", D: "2 lần" } },
-            // Các câu 16, 17, 18 đã thêm đáp án A B C D theo yêu cầu
             { id: 16, q: "Trong PowerPoint, em mở dải lệnh nào để hiển thị các mẫu định dạng (Themes)?", a: "C", options: { A: "Home", B: "Insert", C: "Design", D: "Animations" } },
             { id: 17, q: "Mỗi bước thực hiện tìm kiếm nhị phân, thuật toán sẽ loại bỏ bao nhiêu phần tử?", a: "B", options: { A: "1 phần tử", B: "Một nửa số phần tử trong vùng đang xét", C: "Toàn bộ danh sách", D: "Loại bỏ phần tử lớn nhất" } },
             { id: 18, q: "Cho danh sách tên [Hoa, Lan, Ly, Mai, Phong, Vi]. Cần mấy bước để tìm thấy tên 'Mai' bằng tìm kiếm nhị phân?", a: "C", options: { A: "1 bước", B: "2 bước", C: "3 bước", D: "4 bước" } }
@@ -178,9 +187,21 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         ${optionsHtml}
                     </div>
+                    <div id="feedback-q${q.id}" class="feedback-text text-indigo-600">
+                        <span class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                            </svg>
+                            Đáp án đúng là: ${q.a} - ${q.options[q.a]}
+                        </span>
+                    </div>
                 `;
                 container.appendChild(div);
             });
+        }
+
+        function closeModal() {
+            document.getElementById('result-modal').classList.add('hidden');
         }
 
         function handleSubmit() {
@@ -191,8 +212,10 @@
                 const selected = form.querySelector(`input[name="q${q.id}"]:checked`);
                 const questionBlock = form.querySelector(`div[data-id="${q.id}"]`);
                 const allLabels = questionBlock.querySelectorAll('label');
+                const feedback = document.getElementById(`feedback-q${q.id}`);
 
-                // Xóa màu cũ
+                // Xóa màu cũ và hiện giải thích đáp án
+                feedback.style.display = 'block';
                 allLabels.forEach(l => {
                     l.classList.remove('correct-answer', 'wrong-answer');
                     l.style.pointerEvents = 'none'; // Khóa không cho chọn lại
@@ -202,8 +225,12 @@
                     if (selected.value === q.a) {
                         score++;
                         selected.parentElement.classList.add('correct-answer');
+                        feedback.classList.replace('text-indigo-600', 'text-green-600');
+                        feedback.innerHTML = `✅ Chính xác! Đáp án đúng là ${q.a}`;
                     } else {
                         selected.parentElement.classList.add('wrong-answer');
+                        feedback.classList.replace('text-indigo-600', 'text-red-600');
+                        feedback.innerHTML = `❌ Sai rồi. Đáp án đúng phải là ${q.a}: ${q.options[q.a]}`;
                         // Hiển thị đáp án đúng
                         allLabels.forEach(l => {
                             if (l.querySelector('input').value === q.a) {
@@ -212,7 +239,9 @@
                         });
                     }
                 } else {
-                    // Nếu không chọn, vẫn hiện đáp án đúng
+                    // Nếu không chọn
+                    feedback.classList.replace('text-indigo-600', 'text-gray-500');
+                    feedback.innerHTML = `⚠️ Bạn chưa trả lời. Đáp án đúng là ${q.a}: ${q.options[q.a]}`;
                     allLabels.forEach(l => {
                         if (l.querySelector('input').value === q.a) {
                             l.classList.add('correct-answer');
@@ -232,7 +261,7 @@
             
             if(score < 9) {
                 document.getElementById('result-icon').innerText = '😕';
-                document.getElementById('result-message').innerText = 'Cần cố gắng hơn bạn nhé! Hãy xem lại các đáp án đúng.';
+                document.getElementById('result-message').innerText = 'Cần cố gắng hơn bạn nhé! Hãy xem lại các đáp án đúng bên dưới.';
             } else if(score < 15) {
                 document.getElementById('result-icon').innerText = '🙂';
                 document.getElementById('result-message').innerText = 'Khá tốt! Bạn đã nắm được kiến thức cơ bản.';
