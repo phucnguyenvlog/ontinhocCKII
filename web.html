@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập Tin học 7</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .options label:hover {
+            background-color: #e8f4f8;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #2ecc71;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct { color: #27ae60; font-weight: bold; }
+        .incorrect { color: #e74c3c; font-weight: bold; text-decoration: line-through; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>CÂU HỎI THAM KHẢO TIN HỌC 7</h1>
+    <form id="quizForm">
+        
+        <!-- Câu 1 -->
+        <div class="question-block" id="q1-block">
+            <div class="question-text">Câu 1. Để định dạng dữ liệu kiểu ngày tháng trong Excel, ta chọn thẻ nào trong hộp thoại Format Cells?</div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. Font</label>
+                <label><input type="radio" name="q1" value="B"> B. Alignment</label>
+                <label><input type="radio" name="q1" value="C"> C. Number</label>
+                <label><input type="radio" name="q1" value="D"> D. Border</label>
+            </div>
+        </div>
+
+        <!-- Câu 2 -->
+        <div class="question-block" id="q2-block">
+            <div class="question-text">Câu 2. Khi sao chép một ô có chứa công thức với địa chỉ tương đối sang một vị trí khác, địa chỉ trong công thức sẽ thay đổi như thế nào?</div>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> A. Giữ nguyên không đổi</label>
+                <label><input type="radio" name="q2" value="B"> B. Thay đổi tên cột</label>
+                <label><input type="radio" name="q2" value="C"> C. Chỉ thay đổi tên hàng</label>
+                <label><input type="radio" name="q2" value="D"> D. Thay đổi tương ứng với vị trí mới</label>
+            </div>
+        </div>
+
+        <!-- Câu 3 -->
+        <div class="question-block" id="q3-block">
+            <div class="question-text">Câu 3. Trong thiết lập in ấn, tùy chọn "Landscape Orientation" có ý nghĩa gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. In theo hướng giấy dọc</label>
+                <label><input type="radio" name="q3" value="B"> B. In theo hướng giấy ngang</label>
+                <label><input type="radio" name="q3" value="C"> C. In vừa vặn trên một trang</label>
+                <label><input type="radio" name="q3" value="D"> D. In hai mặt giấy</label>
+            </div>
+        </div>
+
+        <!-- Câu 4 -->
+        <div class="question-block" id="q4-block">
+            <div class="question-text">Câu 4. Để chỉ in một vùng dữ liệu được chọn trên trang tính, trong mục Settings của lệnh in, ta chọn:</div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. Print Active Sheets</label>
+                <label><input type="radio" name="q4" value="B"> B. Print Entire Workbook</label>
+                <label><input type="radio" name="q4" value="C"> C. Print Selection</label>
+                <label><input type="radio" name="q4" value="D"> D. Print All Pages</label>
+            </div>
+        </div>
+
+        <!-- Câu 5 -->
+        <div class="question-block" id="q5-block">
+            <div class="question-text">Câu 5. Để căn giữa bảng dữ liệu trên trang giấy in, ta chọn Custom Margins và đánh dấu tích vào ô nào?</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. Horizontally và Vertically</label>
+                <label><input type="radio" name="q5" value="B"> B. Top và Bottom</label>
+                <label><input type="radio" name="q5" value="C"> C. Left và Right</label>
+                <label><input type="radio" name="q5" value="D"> D. Header và Footer</label>
+            </div>
+        </div>
+
+        <!-- BẠN CÓ THỂ COPY BLOCK CÂU HỎI TRÊN ĐỂ THÊM CÂU 6, 7, 8... VÀO ĐÂY -->
+
+        <button type="button" onclick="chamDiem()">Nộp bài / Chấm điểm</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    // Khai báo đáp án đúng
+    const correctAnswers = {
+        q1: "C",
+        q2: "D",
+        q3: "B",
+        q4: "C",
+        q5: "A"
+    };
+
+    function chamDiem() {
+        let score = 0;
+        let totalQuestions = Object.keys(correctAnswers).length;
+        let form = document.getElementById('quizForm');
+        
+        // Lặp qua từng câu hỏi để kiểm tra
+        for (let q in correctAnswers) {
+            let options = form[q];
+            let answered = false;
+            
+            // Xóa định dạng cũ
+            let labels = document.querySelectorAll(`input[name="${q}"]`);
+            labels.forEach(input => {
+                input.parentElement.classList.remove('correct', 'incorrect');
+            });
+
+            // Kiểm tra đáp án người dùng chọn
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].checked) {
+                    answered = true;
+                    if (options[i].value === correctAnswers[q]) {
+                        score++;
+                        options[i].parentElement.classList.add('correct');
+                    } else {
+                        options[i].parentElement.classList.add('incorrect');
+                        // Hiển thị đáp án đúng nếu làm sai
+                        for (let j = 0; j < options.length; j++) {
+                            if (options[j].value === correctAnswers[q]) {
+                                options[j].parentElement.classList.add('correct');
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Nếu chưa chọn đáp án, hiển thị đáp án đúng
+            if (!answered) {
+                for (let j = 0; j < options.length; j++) {
+                    if (options[j].value === correctAnswers[q]) {
+                        options[j].parentElement.classList.add('correct');
+                    }
+                }
+            }
+        }
+
+        // Hiển thị kết quả
+        let resultDiv = document.getElementById('result');
+        resultDiv.style.display = "block";
+        resultDiv.style.backgroundColor = score === totalQuestions ? "#d4edda" : "#fff3cd";
+        resultDiv.style.color = score === totalQuestions ? "#155724" : "#856404";
+        resultDiv.innerHTML = `Bạn đã làm đúng ${score} / ${totalQuestions} câu!`;
+    }
+</script>
+
+</body>
+</html>
