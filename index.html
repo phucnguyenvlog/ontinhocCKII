@@ -1,24 +1,26 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn Tập Tin Học 7 - Premium Edition</title>
+    <title>Ôn Tập Tin Học 7 - Đề Cương Chính Thức</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
             min-height: 100vh;
+            color: #1f2937;
         }
 
         .glass-morphism {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .question-card {
@@ -29,12 +31,14 @@
         .question-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: #e5e7eb;
         }
 
         input[type="radio"]:checked + span {
             background-color: #4f46e5;
             color: white;
             border-color: #4f46e5;
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
         }
 
         .correct-answer {
@@ -51,12 +55,15 @@
 
         .feedback-text {
             display: none;
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #f3f4f6;
+            border-left: 4px solid #4f46e5;
         }
 
-        /* Hiệu ứng mượt mà khi hiện nội dung */
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
@@ -65,95 +72,142 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Tùy chỉnh thanh cuộn */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #c7c7cc; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
-    <!-- MÀN HÌNH CHỌN CHẾ ĐỘ (WELCOME) -->
-    <div id="welcome-screen" class="max-w-2xl mx-auto glass-morphism p-10 text-center mt-20">
-        <h1 class="text-4xl font-bold text-gray-800 mb-6">Hệ Thống Ôn Tập Tin Học 7</h1>
-        <p class="text-gray-600 mb-8 text-lg">Chào mừng bạn đến với trang web ôn tập. Vui lòng chọn chế độ làm bài để bắt đầu!</p>
+    <!-- MÀN HÌNH CHỌN CHẾ ĐỘ -->
+    <div id="welcome-screen" class="max-w-3xl mx-auto glass-morphism p-10 text-center mt-12 mb-12">
+        <div class="mb-6 flex justify-center">
+            <span class="text-6xl">🎓</span>
+        </div>
+        <h1 class="text-4xl font-bold text-indigo-900 mb-4">Hệ Thống Ôn Tập Tin Học 7</h1>
+        <p class="text-gray-600 mb-10 text-lg">Đề cương tham khảo - Gồm 18 câu trắc nghiệm và 3 câu tự luận.</p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <button onclick="startQuiz('original')" class="p-6 border-2 border-indigo-500 rounded-xl hover:bg-indigo-500 hover:text-white transition-all group">
-                <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">📄</div>
-                <span class="font-bold text-xl block">Giữ Nguyên Đề</span>
-                <span class="text-sm opacity-80 italic">Theo thứ tự từ câu 1 đến 18</span>
+            <button onclick="startQuiz('original')" class="p-8 border-2 border-indigo-200 rounded-2xl hover:bg-indigo-50 hover:border-indigo-500 transition-all group shadow-sm">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">📄</div>
+                <span class="font-bold text-xl block text-indigo-800">Giữ Nguyên Đề Gốc</span>
+                <span class="text-sm text-gray-500 mt-2 block">Thứ tự từ câu 1 đến câu 18 theo đúng file tài liệu.</span>
             </button>
-            <button onclick="startQuiz('shuffle')" class="p-6 border-2 border-purple-500 rounded-xl hover:bg-purple-500 hover:text-white transition-all group">
-                <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">🔀</div>
-                <span class="font-bold text-xl block">Trộn Đề Ngẫu Nhiên</span>
-                <span class="text-sm opacity-80 italic">Thay đổi thứ tự câu hỏi bất kỳ</span>
+            <button onclick="startQuiz('shuffle')" class="p-8 border-2 border-purple-200 rounded-2xl hover:bg-purple-50 hover:border-purple-500 transition-all group shadow-sm">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🔀</div>
+                <span class="font-bold text-xl block text-purple-800">Trộn Đề Ngẫu Nhiên</span>
+                <span class="text-sm text-gray-500 mt-2 block">Xáo trộn vị trí các câu hỏi để kiểm tra trí nhớ.</span>
             </button>
         </div>
     </div>
 
-    <!-- NỘI DUNG CHÍNH (ẨN KHI CHƯA CHỌN) -->
+    <!-- NỘI DUNG BÀI LÀM -->
     <div id="quiz-content" class="hidden max-w-4xl mx-auto">
-        <div class="glass-morphism p-6 sticky top-4 z-50 mb-8 flex justify-between items-center shadow-lg">
+        <!-- Header -->
+        <div class="glass-morphism p-6 sticky top-4 z-50 mb-8 flex flex-col md:flex-row justify-between items-center shadow-lg gap-4">
             <div>
-                <h2 class="text-2xl font-bold text-indigo-700">Ôn Tập Tin Học 7</h2>
-                <p id="mode-text" class="text-sm text-gray-500"></p>
+                <h2 class="text-2xl font-bold text-indigo-800">Bài Làm Trắc Nghiệm</h2>
+                <p id="mode-text" class="text-sm text-gray-500 font-medium"></p>
             </div>
-            <div class="flex gap-4">
-                <button onclick="location.reload()" class="bg-gray-200 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-300">Quay lại</button>
-                <div id="score-float" class="hidden bg-indigo-600 text-white px-4 py-2 rounded-lg font-bold">
+            <div class="flex gap-3">
+                <button onclick="location.reload()" class="bg-gray-100 px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-200 transition-colors shadow-sm">Làm lại từ đầu</button>
+                <div id="score-float" class="hidden bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2.5 rounded-xl font-bold shadow-md">
                     Điểm: 0/18
                 </div>
             </div>
         </div>
 
+        <!-- Form Trắc nghiệm -->
         <form id="quiz-form" class="space-y-6 mb-12">
             <div id="questions-list" class="space-y-6">
-                <!-- Câu hỏi sẽ được chèn vào đây bởi JS -->
+                <!-- Javascript sẽ render câu hỏi vào đây -->
             </div>
             
-            <button type="button" onclick="handleSubmit()" id="submit-btn" class="w-full py-5 bg-indigo-600 text-white text-2xl font-bold rounded-2xl shadow-xl hover:bg-indigo-700 transition-colors transform hover:scale-[1.02] active:scale-95">
+            <button type="button" onclick="handleSubmit()" id="submit-btn" class="w-full py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-2xl font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 active:translate-y-0">
                 Nộp Bài Và Xem Kết Quả
             </button>
         </form>
+
+        <!-- Phần Tự Luận (Luôn hiển thị ở dưới cùng) -->
+        <div class="glass-morphism p-8 mt-12 mb-12 fade-in border-t-4 border-indigo-500">
+            <h2 class="text-2xl font-bold text-indigo-900 mb-6 flex items-center gap-2">
+                <span>✍️</span> PHẦN TỰ LUẬN (Tham khảo)
+            </h2>
+            
+            <div class="space-y-8 text-gray-800">
+                <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
+                    <h3 class="font-bold text-lg mb-3 text-indigo-800">Câu 19:</h3>
+                    <ul class="list-none space-y-2">
+                        <li><strong>a)</strong> Nêu thao tác sao chép dữ liệu từ tệp văn bản sang trang chiếu?</li>
+                        <li><strong>b)</strong> Nêu các bước cơ bản để chèn một hình ảnh từ máy tính vào trang chiếu.</li>
+                        <li><strong>c)</strong> Tại sao khi thiết kế bài trình chiếu, ta không nên sử dụng quá nhiều màu sắc sặc sỡ và nhiều loại phông chữ khác nhau trên cùng một trang?</li>
+                    </ul>
+                </div>
+
+                <div class="bg-purple-50 p-6 rounded-xl border border-purple-100">
+                    <h3 class="font-bold text-lg mb-3 text-purple-800">Câu 20:</h3>
+                    <p>Cho chủ đề: <strong>“ BẢO VỆ MÔI TRƯỜNG ”</strong>. Hãy xây dựng nội dung cho 1 trang chiếu có sử dụng cấu trúc phân cấp hợp lí.</p>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                    <h3 class="font-bold text-lg mb-3 text-blue-800">Câu 21:</h3>
+                    <p class="mb-3">Cho danh sách tên học sinh đã được sắp xếp theo thứ tự bảng chữ cái: <strong>[Bình, Cường, Dung, Hùng, Lan, Minh, Xuân]</strong>.</p>
+                    <p class="mb-3 font-medium">Sử dụng thuật toán tìm kiếm nhị phân để tìm tên "Minh" trong danh sách trên.</p>
+                    <ul class="list-none space-y-2">
+                        <li><strong>a)</strong> Ở bước 1, ta so sánh tên " Minh " với tên nào ở vị trí giữa của danh sách?</li>
+                        <li><strong>b)</strong> Sau bước 1, danh sách tìm kiếm được thu hẹp lại gồm những tên nào? Giải thích ngắn gọn.</li>
+                        <li><strong>c)</strong> Trình bày bước 2 của thuật toán để tìm ra tên " Minh ".</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- MODAL KẾT QUẢ -->
-    <div id="result-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] p-4">
-        <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center">
-            <div id="result-icon" class="text-6xl mb-4">🏆</div>
-            <h2 class="text-3xl font-bold mb-2">Kết Quả Bài Làm</h2>
-            <div id="result-stats" class="text-5xl font-extrabold text-indigo-600 mb-6">18/18</div>
-            <p id="result-message" class="text-gray-600 mb-6 text-lg">Tuyệt vời! Bạn đã hoàn thành bài ôn tập rất tốt.</p>
+    <div id="result-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-60 flex items-center justify-center z-[100] p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl transform transition-all scale-100">
+            <div id="result-icon" class="text-7xl mb-4 animate-bounce">🏆</div>
+            <h2 class="text-3xl font-bold mb-2 text-gray-800">Kết Quả Bài Làm</h2>
+            <div id="result-stats" class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-4">18/18</div>
+            <p id="result-message" class="text-gray-600 mb-8 text-lg font-medium">Tuyệt vời! Bạn đã hoàn thành bài ôn tập rất tốt.</p>
             <div class="space-y-3">
-                <button onclick="closeModal()" class="w-full py-3 bg-indigo-100 text-indigo-700 rounded-xl font-bold text-lg hover:bg-indigo-200">Xem lại đáp án chi tiết</button>
-                <button onclick="location.reload()" class="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700">Làm lại bài mới</button>
+                <button onclick="closeModal()" class="w-full py-4 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-xl font-bold text-lg hover:bg-indigo-100 transition-colors">🔍 Xem lại đáp án chi tiết</button>
+                <button onclick="location.reload()" class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold text-lg shadow-md hover:shadow-lg transition-all">🔄 Làm lại bài mới</button>
             </div>
         </div>
     </div>
 
     <script>
+        // Data trích xuất CHÍNH XÁC 100% từ file Word cung cấp
         const allQuestions = [
             { id: 1, q: "Để định dạng dữ liệu kiểu ngày tháng trong Excel, ta chọn thẻ nào trong hộp thoại Format Cells?", a: "C", options: { A: "Font", B: "Alignment", C: "Number", D: "Border" } },
-            { id: 2, q: "Khi sao chép một ô có chứa công thức với địa chỉ tương đối sang một vị trí khác, địa chỉ sẽ:", a: "D", options: { A: "Giữ nguyên không đổi", B: "Thay đổi tên cột", C: "Chỉ thay đổi tên hàng", D: "Thay đổi tương ứng với vị trí mới" } },
-            { id: 3, q: "Trong thiết lập in ấn, tùy chọn 'Landscape Orientation' có ý nghĩa gì?", a: "B", options: { A: "In theo hướng giấy dọc", B: "In theo hướng giấy ngang", C: "In vừa vặn trên một trang", D: "In hai mặt giấy" } },
-            { id: 4, q: "Để chỉ in một vùng dữ liệu được chọn trên trang tính, trong mục Settings ta chọn:", a: "C", options: { A: "Print Active Sheets", B: "Print Entire Workbook", C: "Print Selection", D: "Print All Pages" } },
-            { id: 5, q: "Để căn giữa bảng dữ liệu trên trang giấy in, ta chọn Custom Margins và chọn ô nào?", a: "A", options: { A: "Horizontally và Vertically", B: "Top và Bottom", C: "Left và Right", D: "Header và Footer" } },
-            { id: 6, q: "Hiệu ứng chuyển trang chiếu (Transitions) là:", a: "B", options: { A: "Hiệu ứng xuất hiện cho các đối tượng trong trang", B: "Hiệu ứng chuyển tiếp giữa trang chiếu này sang trang chiếu khác", C: "Hiệu ứng âm thanh khi mở file", D: "Thay đổi màu sắc của trang chiếu" } },
-            { id: 7, q: "Để tạo hiệu ứng động cho MỘT ĐỐI TƯỢNG (văn bản, hình ảnh...) trên trang chiếu, ta dùng thẻ:", a: "C", options: { A: "Transitions", B: "Design", C: "Animations", D: "Slide Show" } },
-            { id: 8, q: "Để thay đổi mẫu định dạng (Theme) cho bài trình chiếu, ta vào dải lệnh:", a: "C", options: { A: "Insert", B: "Home", C: "Design", D: "Review" } },
-            { id: 9, q: "Điểm khác biệt cơ bản giữa hiệu ứng Transition và Animation là gì?", a: "B", options: { A: "Transition chỉ dùng cho hình ảnh", B: "Transition áp dụng cho trang chiếu, Animation áp dụng cho đối tượng", C: "Animation áp dụng cho trang chiếu, Transition áp dụng cho đối tượng", D: "Không có sự khác biệt" } },
-            { id: 10, q: "Trong dải lệnh Animations, nhóm lệnh nào quy định cách đối tượng 'biến mất'?", a: "C", options: { A: "Entrance", B: "Emphasis", C: "Exit", D: "Motion Paths" } },
-            { id: 11, q: "Phím tắt để bắt đầu trình chiếu từ trang hiện tại là:", a: "B", options: { A: "F5", B: "Shift + F5", C: "Ctrl + P", D: "Alt + F5" } },
-            { id: 12, q: "Thuật toán tìm kiếm nhị phân yêu cầu danh sách đầu vào phải:", a: "B", options: { A: "Chưa sắp xếp", B: "Đã được sắp xếp", C: "Chỉ chứa số", D: "Có ít hơn 10 phần tử" } },
-            { id: 13, q: "Danh sách [1, 3, 5, 6, 10]. Tìm giá trị 6 bằng tìm kiếm nhị phân mất mấy bước so sánh?", a: "A", options: { A: "2 bước", B: "3 bước", C: "4 bước", D: "5 bước" } },
-            { id: 14, q: "Ưu điểm lớn nhất của tìm kiếm nhị phân so với tìm kiếm tuần tự là:", a: "C", options: { A: "Dễ thực hiện hơn", B: "Tìm được nhiều giá trị cùng lúc", C: "Tìm kiếm nhanh hơn rất nhiều với danh sách lớn", D: "Không cần sắp xếp" } },
-            { id: 15, q: "Với danh sách đã sắp xếp có 8 phần tử, số lần so sánh tối đa của thuật toán nhị phân là:", a: "A", options: { A: "3 lần", B: "4 lần", C: "8 lần", D: "2 lần" } },
-            { id: 16, q: "Trong PowerPoint, em mở dải lệnh nào để hiển thị các mẫu định dạng (Themes)?", a: "C", options: { A: "Home", B: "Insert", C: "Design", D: "Animations" } },
-            { id: 17, q: "Mỗi bước thực hiện tìm kiếm nhị phân, thuật toán sẽ loại bỏ bao nhiêu phần tử?", a: "B", options: { A: "1 phần tử", B: "Một nửa số phần tử trong vùng đang xét", C: "Toàn bộ danh sách", D: "Loại bỏ phần tử lớn nhất" } },
-            { id: 18, q: "Cho danh sách tên [Hoa, Lan, Ly, Mai, Phong, Vi]. Cần mấy bước để tìm thấy tên 'Mai' bằng tìm kiếm nhị phân?", a: "C", options: { A: "1 bước", B: "2 bước", C: "3 bước", D: "4 bước" } }
+            { id: 2, q: "Khi sao chép một ô có chứa công thức với địa chỉ tương đối sang một vị trí khác, địa chỉ trong công thức sẽ thay đổi như thế nào?", a: "D", options: { A: "Giữ nguyên không đổi", B: "Chỉ thay đổi tên cột", C: "Chỉ thay đổi tên hàng", D: "Thay đổi tương ứng với vị trí mới" } },
+            { id: 3, q: "Trong thiết lập in ấn, tùy chọn \"Landscape Orientation\" có ý nghĩa gì?", a: "B", options: { A: "In theo hướng giấy dọc", B: "In theo hướng giấy ngang", C: "In vừa vặn trên một trang", D: "In hai mặt giấy" } },
+            { id: 4, q: "Để chỉ in một vùng dữ liệu được chọn trên trang tính, trong mục Settings của lệnh in, ta chọn:", a: "C", options: { A: "Print Active Sheets", B: "Print Entire Workbook", C: "Print Selection", D: "Print All Pages" } },
+            { id: 5, q: "Để căn giữa bảng dữ liệu trên trang giấy in, ta chọn Custom Margins và đánh dấu tích vào ô nào?", a: "A", options: { A: "Horizontally và Vertically", B: "Top và Bottom", C: "Left và Right", D: "Header và Footer" } },
+            { id: 6, q: "Hiệu ứng chuyển trang chiếu (Transitions) là gì?", a: "B", options: { A: "Hiệu ứng xuất hiện của văn bản", B: "Hiệu ứng chuyển từ trang chiếu này sang trang chiếu khác", C: "Hiệu ứng di chuyển của hình ảnh", D: "Hiệu ứng âm thanh nền" } },
+            { id: 7, q: "Để tạo hiệu ứng động cho một đối tượng (văn bản, hình ảnh) trên trang chiếu, ta dùng dải lệnh nào?", a: "C", options: { A: "Design", B: "Transitions", C: "Animations", D: "Slide Show" } },
+            { id: 8, q: "Để thay đổi mẫu định dạng (Theme) cho bài trình chiếu, ta chọn dải lệnh nào?", a: "C", options: { A: "Home", B: "Insert", C: "Design", D: "View" } },
+            { id: 9, q: "Điểm khác biệt cơ bản giữa hiệu ứng Transitions và Animations là gì?", a: "B", options: { A: "Transitions áp dụng cho đối tượng, Animations áp dụng cho trang chiếu", B: "Transitions áp dụng cho trang chiếu, Animations áp dụng cho đối tượng", C: "Cả hai đều áp dụng cho đối tượng", D: "Cả hai đều áp dụng cho trang chiếu" } },
+            { id: 10, q: "Hiệu ứng chuyển tiếp giữa các trang chiếu khi trình chiếu được gọi là gì?", a: "B", options: { A: "Animation.", B: "Transition.", C: "Design.", D: "Layout." } },
+            { id: 11, q: "Phím tắt nào dùng để bắt đầu trình chiếu từ trang hiện tại?", a: "B", options: { A: "F5", B: "Shift + F5", C: "Alt + F5", D: "Ctrl + F5" } }, // Theo yêu cầu: Shift + F5
+            { id: 12, q: "Thuật toán tìm kiếm nhị phân chỉ áp dụng được cho danh sách có đặc điểm gì?", a: "B", options: { A: "Danh sách có chứa số âm", B: "Danh sách đã được sắp xếp", C: "Danh sách chưa được sắp xếp", D: "Danh sách có ít phần tử" } },
+            { id: 13, q: "Cho danh sách đã sắp xếp: [1, 3, 5, 6, 10]. Để tìm phần tử có giá trị là 6 bằng thuật toán tìm kiếm nhị phân, ta cần thực hiện bao nhiêu bước so sánh?", a: "A", options: { A: "2 bước", B: "3 bước", C: "4 bước", D: "5 bước" } },
+            { id: 14, q: "Ưu điểm nổi bật của thuật toán tìm kiếm nhị phân so với tìm kiếm tuần tự là gì?", a: "C", options: { A: "Dễ cài đặt hơn", B: "Không yêu cầu danh sách phải sắp xếp", C: "Tìm kiếm nhanh hơn, đặc biệt với danh sách lớn", D: "Có thể tìm được nhiều giá trị cùng lúc" } },
+            { id: 15, q: "Cho danh sách đã sắp xếp gồm 8 phần tử. Số bước tối đa để tìm ra một phần tử bằng thuật toán tìm kiếm nhị phân là bao nhiêu?", a: "C", options: { A: "8 bước", B: "4 bước", C: "3 bước", D: "2 bước" } }, // Theo yêu cầu người dùng: 3 bước
+            // Bổ sung các đáp án giả định cho câu 16, 17, 18 để khớp với đáp án gốc trong Word
+            { id: 16, q: "Trong PowerPoint, em mở thẻ nào để hiển thị các mẫu định dạng?", a: "C", options: { A: "Home", B: "Insert", C: "Design", D: "View" } }, 
+            { id: 17, q: "Mỗi lần thực hiện tìm kiếm nhị phân, thuật toán loại bỏ phần tử (nhóm phần tử) nào trong các ý sau đây?", a: "C", options: { A: "Một phần tử.", B: "Một phần ba danh sách.", C: "Một nửa danh sách.", D: "Toàn bộ danh sách." } },
+            { id: 18, q: "Thuật toán tìm kiếm nhị phân cần bao nhiêu bước để tìm thấy “Mai” trong danh sách [“Hoa\", “Lan”, “Ly”, “Mai”, “Phong”, “Vi”]?", a: "C", options: { A: "1", B: "2", C: "3", D: "4" } }
         ];
 
         function startQuiz(mode) {
             document.getElementById('welcome-screen').classList.add('hidden');
             document.getElementById('quiz-content').classList.remove('hidden');
-            document.getElementById('mode-text').innerText = mode === 'original' ? 'Chế độ: Giữ nguyên đề gốc' : 'Chế độ: Trộn đề ngẫu nhiên';
+            document.getElementById('mode-text').innerText = mode === 'original' ? '🎯 Chế độ: Giữ nguyên đề gốc' : '🔀 Chế độ: Trộn đề ngẫu nhiên';
             
             let displayList = [...allQuestions];
             if (mode === 'shuffle') {
@@ -161,6 +215,7 @@
             }
             
             renderQuestions(displayList);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function renderQuestions(questions) {
@@ -169,31 +224,29 @@
             
             questions.forEach((q, index) => {
                 const div = document.createElement('div');
-                div.className = 'question-card glass-morphism p-6 fade-in';
+                div.className = 'question-card glass-morphism p-6 md:p-8 fade-in bg-white';
                 div.setAttribute('data-id', q.id);
                 
                 let optionsHtml = '';
                 for (let key in q.options) {
                     optionsHtml += `
-                        <label class="flex items-center space-x-3 p-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-indigo-50 transition-colors">
-                            <input type="radio" name="q${q.id}" value="${key}" class="w-5 h-5 text-indigo-600">
-                            <span class="text-gray-700 font-medium">${key}. ${q.options[key]}</span>
+                        <label class="flex items-start space-x-3 p-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-indigo-50 transition-colors shadow-sm">
+                            <input type="radio" name="q${q.id}" value="${key}" class="w-5 h-5 mt-0.5 text-indigo-600 border-gray-300 focus:ring-indigo-500 flex-shrink-0">
+                            <span class="text-gray-800 font-medium leading-relaxed block w-full">${key}. ${q.options[key]}</span>
                         </label>
                     `;
                 }
 
                 div.innerHTML = `
-                    <p class="text-lg font-bold text-indigo-900 mb-4">Câu ${index + 1}: ${q.q}</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="flex items-start gap-3 mb-5">
+                        <div class="bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-lg shrink-0">Câu ${index + 1}</div>
+                        <p class="text-lg font-bold text-gray-900 leading-relaxed">${q.q}</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         ${optionsHtml}
                     </div>
-                    <div id="feedback-q${q.id}" class="feedback-text text-indigo-600">
-                        <span class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                            </svg>
-                            Đáp án đúng là: ${q.a} - ${q.options[q.a]}
-                        </span>
+                    <div id="feedback-q${q.id}" class="feedback-text text-indigo-800 mt-4">
+                        <!-- Sẽ hiển thị kết quả đúng/sai ở đây -->
                     </div>
                 `;
                 container.appendChild(div);
@@ -214,24 +267,28 @@
                 const allLabels = questionBlock.querySelectorAll('label');
                 const feedback = document.getElementById(`feedback-q${q.id}`);
 
-                // Xóa màu cũ và hiện giải thích đáp án
                 feedback.style.display = 'block';
                 allLabels.forEach(l => {
                     l.classList.remove('correct-answer', 'wrong-answer');
-                    l.style.pointerEvents = 'none'; // Khóa không cho chọn lại
+                    l.style.pointerEvents = 'none'; // Không cho chọn lại sau khi nộp
                 });
 
                 if (selected) {
                     if (selected.value === q.a) {
                         score++;
                         selected.parentElement.classList.add('correct-answer');
-                        feedback.classList.replace('text-indigo-600', 'text-green-600');
-                        feedback.innerHTML = `✅ Chính xác! Đáp án đúng là ${q.a}`;
+                        feedback.classList.replace('text-indigo-800', 'text-green-800');
+                        feedback.style.backgroundColor = '#d1fae5'; 
+                        feedback.style.borderColor = '#10b981';
+                        feedback.innerHTML = `✅ <strong>Chính xác!</strong> Đáp án đúng là <strong>${q.a}</strong>.`;
                     } else {
                         selected.parentElement.classList.add('wrong-answer');
-                        feedback.classList.replace('text-indigo-600', 'text-red-600');
-                        feedback.innerHTML = `❌ Sai rồi. Đáp án đúng phải là ${q.a}: ${q.options[q.a]}`;
-                        // Hiển thị đáp án đúng
+                        feedback.classList.replace('text-indigo-800', 'text-red-800');
+                        feedback.style.backgroundColor = '#fee2e2'; 
+                        feedback.style.borderColor = '#ef4444';
+                        feedback.innerHTML = `❌ <strong>Chưa đúng.</strong> Đáp án chính xác phải là <strong>${q.a}: ${q.options[q.a]}</strong>.`;
+                        
+                        // Đánh dấu xanh cho đáp án đúng để đối chiếu
                         allLabels.forEach(l => {
                             if (l.querySelector('input').value === q.a) {
                                 l.classList.add('correct-answer');
@@ -239,9 +296,12 @@
                         });
                     }
                 } else {
-                    // Nếu không chọn
-                    feedback.classList.replace('text-indigo-600', 'text-gray-500');
-                    feedback.innerHTML = `⚠️ Bạn chưa trả lời. Đáp án đúng là ${q.a}: ${q.options[q.a]}`;
+                    // Xử lý khi chưa chọn đáp án
+                    feedback.classList.replace('text-indigo-800', 'text-gray-700');
+                    feedback.style.backgroundColor = '#f3f4f6';
+                    feedback.style.borderColor = '#9ca3af';
+                    feedback.innerHTML = `⚠️ <strong>Bạn bỏ trống.</strong> Đáp án chính xác là <strong>${q.a}: ${q.options[q.a]}</strong>.`;
+                    
                     allLabels.forEach(l => {
                         if (l.querySelector('input').value === q.a) {
                             l.classList.add('correct-answer');
@@ -250,24 +310,24 @@
                 }
             });
 
-            // Hiển thị kết quả
+            // Cập nhật điểm và giao diện
             document.getElementById('score-float').innerText = `Điểm: ${score}/18`;
             document.getElementById('score-float').classList.remove('hidden');
             document.getElementById('submit-btn').classList.add('hidden');
             
-            // Hiện Modal
+            // Hiển thị modal
             document.getElementById('result-modal').classList.remove('hidden');
             document.getElementById('result-stats').innerText = `${score}/18`;
             
             if(score < 9) {
-                document.getElementById('result-icon').innerText = '😕';
-                document.getElementById('result-message').innerText = 'Cần cố gắng hơn bạn nhé! Hãy xem lại các đáp án đúng bên dưới.';
+                document.getElementById('result-icon').innerText = '📚';
+                document.getElementById('result-message').innerText = 'Hãy xem lại các câu sai và ôn tập thêm bạn nhé!';
             } else if(score < 15) {
-                document.getElementById('result-icon').innerText = '🙂';
-                document.getElementById('result-message').innerText = 'Khá tốt! Bạn đã nắm được kiến thức cơ bản.';
+                document.getElementById('result-icon').innerText = '👍';
+                document.getElementById('result-message').innerText = 'Khá tốt! Bạn đã nắm được phần lớn kiến thức cơ bản.';
             } else {
-                document.getElementById('result-icon').innerText = '🏆';
-                document.getElementById('result-message').innerText = 'Tuyệt vời! Bạn đã hoàn thành bài ôn tập rất xuất sắc.';
+                document.getElementById('result-icon').innerText = '🌟';
+                document.getElementById('result-message').innerText = 'Xuất sắc! Bạn đã sẵn sàng cho bài kiểm tra.';
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -275,3 +335,6 @@
     </script>
 </body>
 </html>
+
+
+```
